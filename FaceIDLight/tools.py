@@ -37,15 +37,15 @@ from scipy.spatial import distance
 from sklearn.metrics.pairwise import cosine_distances
 
 
-BASE_URL = "https://github.com/Martlgap/test/releases/download/v0.2/"
+BASE_URL = "https://github.com/Martlgap/FaceIDLight/releases/download/v.0.1/"
 
 FILE_HASHES = {
-    "mtcnn_o_net": "768385d570300648b7b881acbd418146522b79b4771029bb2e684bdd8c764b9f",
-    "mtcnn_p_net": "530183192e24f7cc86b6706e1eb600482c4ed4306399ac939c472e3957bae15e",
-    "mtcnn_r_net": "5ec33b065eb2802bc4c2575d21feff1a56958d854785bc3e2907d3b7ace861a2",
-    "faceid_mobileNet": "6c19b789f661caa8da735566490bfd8895beffb2a1ec97a56b126f0539991aa6",
-    "faceid_ResNet50": "f4d8b0194957a3ad766135505fc70a91343660151a8103bbb6c3b8ac34dbb4e2",
-    "imgs": "61a2df0ba5d71ce49f57b11ffc37bc9122312370530b2d7cf32d279b01f742aa",
+    "o_net": "768385d570300648b7b881acbd418146522b79b4771029bb2e684bdd8c764b9f",
+    "p_net": "530183192e24f7cc86b6706e1eb600482c4ed4306399ac939c472e3957bae15e",
+    "r_net": "5ec33b065eb2802bc4c2575d21feff1a56958d854785bc3e2907d3b7ace861a2",
+    "mobileNet": "6c19b789f661caa8da735566490bfd8895beffb2a1ec97a56b126f0539991aa6",
+    "resNet50": "f4d8b0194957a3ad766135505fc70a91343660151a8103bbb6c3b8ac34dbb4e2",
+    "sample_gallery": "99c24edc7edd6dd1a1c306b708c6a17ae5059e446540885e1f1953d2f9125778",
 }
 
 
@@ -127,7 +127,7 @@ class FaceRecognition:
     def __init__(
         self,
         model_path: str = None,
-        model_type: str = "faceid_mobileNet",
+        model_type: str = "mobileNet",
     ):
         if model_path is None:
             model_path = get_file(BASE_URL + model_type + ".tflite", FILE_HASHES[model_type])
@@ -227,13 +227,13 @@ class FaceDetection:
         self._steps_threshold = steps_threshold
         self._scale_factor = scale_factor
         self.p_net = tflite.Interpreter(
-            model_path=get_file(BASE_URL + "mtcnn_p_net.tflite", FILE_HASHES["mtcnn_p_net"])
+            model_path=get_file(BASE_URL + "p_net.tflite", FILE_HASHES["p_net"])
         )
         self.r_net = tflite.Interpreter(
-            model_path=get_file(BASE_URL + "mtcnn_r_net.tflite", FILE_HASHES["mtcnn_r_net"])
+            model_path=get_file(BASE_URL + "r_net.tflite", FILE_HASHES["r_net"])
         )
         self.o_net = tflite.Interpreter(
-            model_path=get_file(BASE_URL + "mtcnn_o_net.tflite", FILE_HASHES["mtcnn_o_net"])
+            model_path=get_file(BASE_URL + "o_net.tflite", FILE_HASHES["o_net"])
         )
 
     def detect_faces(self, img):
