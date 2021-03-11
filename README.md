@@ -21,7 +21,7 @@ Pull request are welcome!
 - [ ] GPU support
 - [ ] Resolution-dependent model-selection
 - [ ] Multithreading for multiple faces
-- [ ] OpenCV Window freezes on MacOS when quitting
+- [x] OpenCV Window freezes on MacOS when quitting (seemed to be fixed)
 
 
 ## Requirements
@@ -76,9 +76,14 @@ Demonstrator().run()
 You can select your own directory for gallery-images (*.png and *.jpg images are supported) by simply add 
 a keyword argument to the Demonstrator Class: `Demonstrator(gal_dir=<full-path-to-your-gallery>)`
 
+You might change the webcam address ID. Do so via selecting a certain number for stream id:
+`Demonstrator(stream_id=<-1, 0, 1, 2, ...>)`
+
 Test the face-identification by simply holding a foto into camera. The provided sample_gallery includes images 
 from: (Andrew_Caldecott, Anja_Paerson, Choi_Sung-hong, Elizabeth_Schumacher, 
 Eva_Amurri, Jim_OBrien, Raul_Ibanez, Rubens_Barrichello, Takahiro_Mori)
+
+Press "q" to close the Demo. (Window has to be selected)
 
 ## Acknowledgement
 - Thanks to Iván de Paz Centeno for his [implementation](https://github.com/ipazc/mtcnn) 

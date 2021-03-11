@@ -33,24 +33,25 @@ class Camera:
         self.stream_id = stream_id
         self.currentFrame = None
         self.ret = False
+        self.stop = False
         self.capture = cv2.VideoCapture(stream_id)
-        self.pill2kill = threading.Event()
-        self.thread = threading.Thread(target=self.update_frame, args=())
-        self.thread.start()  # TODO check if really threading necessary
+        self.thread = threading.Thread(target=self.update_frame)
 
     # Continually updates the frame
     def update_frame(self):
         while True:
             self.ret, self.currentFrame = self.capture.read()
-
             while self.currentFrame is None:  # Continually grab frames until we get a good one
                 self.capture.read()
+            if self.stop:
+                break
 
     # Get current frame
     def get_frame(self):
         return self.ret, self.currentFrame
 
     def screen(self, function):
+        self.thread.start()
         window_name = "Streaming from {}".format(self.stream_id)
         cv2.namedWindow(window_name)
         last = 0
@@ -68,8 +69,9 @@ class Camera:
                 )
                 last = time.time()
                 cv2.imshow(window_name, frame)
-            if cv2.waitKey(1) & 0xFF == ord("q"):  # TODO MacOS window freezes after exiting here
+            if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
-        self.pill2kill.set()
+        self.stop = True
         self.thread.join()
         cv2.destroyWindow(window_name)
+        self.capture.release()
