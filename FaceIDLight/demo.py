@@ -32,9 +32,9 @@ from FaceIDLight.tools import FaceID
 
 
 class Demonstrator:
-    def __init__(self, gal_dir=None):
+    def __init__(self, gal_dir=None, stream_id=0):
         # Initialization
-        self.cam = Camera()
+        self.cam = Camera(stream_id=stream_id)
         self.FaceID = FaceID(gal_dir=gal_dir)
 
         # Set OpenCV defaults

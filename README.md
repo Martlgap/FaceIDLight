@@ -57,9 +57,13 @@ TODO
 
 
 ## How to install the FaceIDLight package
-Simply install the package via pip:
+Simply install the package via pip from git:
 ```zsh
 pip3 install git+https://github.com/martlgap/FaceIDLight
+``` 
+or directly from a wheel:
+```zsh
+pip3 install https://github.com/Martlgap/FaceIDLight/releases/download/v.0.1/FaceIDLight-0.1-py3-none-any.whl
 ``` 
 
 
