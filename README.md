@@ -72,6 +72,9 @@ Demonstrator().run()
 You can select your own directory for gallery-images (*.png and *.jpg images are supported) by simply add 
 a keyword argument to the Demonstrator Class: `Demonstrator(gal_dir=<full-path-to-your-gallery>)`
 
+Test the face-identification by simply holding a foto into camera. The provided sample_gallery includes images 
+from: (Andrew_Caldecott, Anja_Paerson, Choi_Sung-hong, Elizabeth_Schumacher, 
+Eva_Amurri, Jim_OBrien, Raul_Ibanez, Rubens_Barrichello, Takahiro_Mori)
 
 ## Acknowledgement
 - Thanks to Iván de Paz Centeno for his [implementation](https://github.com/ipazc/mtcnn) 
