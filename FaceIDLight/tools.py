@@ -45,7 +45,7 @@ FILE_HASHES = {
     "r_net": "5ec33b065eb2802bc4c2575d21feff1a56958d854785bc3e2907d3b7ace861a2",
     "mobileNet": "6c19b789f661caa8da735566490bfd8895beffb2a1ec97a56b126f0539991aa6",
     "resNet50": "f4d8b0194957a3ad766135505fc70a91343660151a8103bbb6c3b8ac34dbb4e2",
-    "sample_gallery": "99c24edc7edd6dd1a1c306b708c6a17ae5059e446540885e1f1953d2f9125778",
+    "sample_gallery": "9f43a83c89a8099e1f3aab75ed9531f932f1b392bea538d6afe52509587438d4",
 }
 
 
@@ -57,7 +57,7 @@ class FaceID:
         self.gal_names = []
         self.gal_faces = []
         self.gal_dir = (
-            gal_dir if gal_dir is not None else get_file(BASE_URL + "imgs.zip", FILE_HASHES["imgs"], is_zip=True)
+            gal_dir if gal_dir is not None else get_file(BASE_URL + "sample_gallery.zip", FILE_HASHES["sample_gallery"], is_zip=True)
         )
         self.update_gallery()
 

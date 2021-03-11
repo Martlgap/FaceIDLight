@@ -25,4 +25,4 @@
 
 from FaceIDLight.demo import Demonstrator
 
-Demonstrator(gal_dir='/Users/martinknoche/Desktop/testimgs').run()
+Demonstrator().run()
