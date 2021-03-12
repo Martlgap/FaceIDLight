@@ -1,15 +1,15 @@
 # FaceIDLight
 
 
-## Description
+## 📘 Description
 A lightweight face-recognition toolbox and pipeline based on tensorflow-lite with MTCNN-Face-Detection 
 and ArcFace-Face-Recognition. No need to install complete tensorflow, tflite-runtime is enough. All tools are
-using CPU only. 
+using CPU only.
 
 Pull request are welcome!
 
 
-### Features 
+## ⚡️ Features 
 - Online Face-Recognition
 - Running completely on CPU
 - Multi Faces
@@ -17,14 +17,14 @@ Pull request are welcome!
 - Tools for Face-Detection, -Verification and Identification
 
 
-### ToDos
+## ✅ ToDos
 - [ ] GPU support
 - [ ] Resolution-dependent model-selection
 - [ ] Multithreading for multiple faces
 - [x] OpenCV Window freezes on MacOS when quitting (seemed to be fixed)
 
 
-## Requirements
+## 🥣 Requirements
 - [Python 3.8.8](https://www.python.org/)
 - [TensorflowLite-Runtime 2.5.0](https://www.tensorflow.org/lite/guide/python)
 - Additional Packages (included in FaceIDLight)
@@ -37,12 +37,14 @@ Pull request are welcome!
     - scipy~=1.6.0
     - scikit-learn~=0.24.0
 
-## How to install tflite-runtime
+
+## ⚙️ How to install tflite-runtime
 ### MacOS
 You can easily install tflite-runtime from https://google-coral.github.io/py-repo/ with the following line:
 ```zsh
 pip3 install --extra-index-url https://google-coral.github.io/py-repo/ tflite_runtime
 ```
+
 
 ### Linux
 Since pip3 `--extra-index-url` is not working properly on Linux systems, you need to directly point to a wheel 
@@ -53,21 +55,23 @@ pip3 install <link-to-your-wheel>
 
 
 ### Windows
-TODO
+```zsh
+pip3 install <link-to-your-wheel>
+``` 
 
 
-## How to install the FaceIDLight package
+## ⚙️ How to install the FaceIDLight package
 Simply install the package via pip from git:
 ```zsh
 pip3 install git+https://github.com/martlgap/FaceIDLight
 ``` 
-or directly from a wheel:
+or if you do not have git installed on your system, install it directly from the wheel:
 ```zsh
 pip3 install https://github.com/Martlgap/FaceIDLight/releases/download/v.0.1/FaceIDLight-0.1-py3-none-any.whl
 ``` 
 
 
-## Run Demo:
+## 🚀 Run Demo:
 Run Python 3.8 and type in:
 ```python
 from FaceIDLight.demo import Demonstrator
@@ -85,7 +89,13 @@ Eva_Amurri, Jim_OBrien, Raul_Ibanez, Rubens_Barrichello, Takahiro_Mori)
 
 Press "q" to close the Demo. (Window has to be selected)
 
-## Acknowledgement
+
+## 📺 Example
+This image shows an example of the `Demonstrator()`:
+![example_image](./examples/screenshot.png)
+
+
+## 🙏 Acknowledgement
 - Thanks to Iván de Paz Centeno for his [implementation](https://github.com/ipazc/mtcnn) 
   of [MTCNN](https://arxiv.org/abs/1604.02878) in [Tensorflow 2](https://www.tensorflow.org/). 
   The MTCNN tflite models are taken "as is" from his repository and were converted to tflite-models afterwards.
@@ -94,6 +104,6 @@ Press "q" to close the Demo. (Window has to be selected)
 - We trained all provided models with the [MS1M](https://arxiv.org/abs/1607.08221) dataset.
 
 
-## BibTex  
+## 📚 BibTex
 If you use our trained models and want to cite our work feel free to use this:
 TODO
