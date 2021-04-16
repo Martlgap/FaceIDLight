@@ -18,7 +18,7 @@ setup(
         "tqdm>=4.59,<4.61",
         "scikit-image~=0.17.2",
         "matplotlib>=3.3.3,<3.5.0",
-        "scipy~=1.4.1",
+        "scipy>=1.4.1,<1.7.0",
         "scikit-learn~=0.24.0",
     ],
     include_package_data=True,
