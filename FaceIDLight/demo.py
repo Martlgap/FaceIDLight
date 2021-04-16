@@ -72,28 +72,34 @@ class Demonstrator:
             # Add aligned face onto img
             img[0 : face.shape[1], num : num + face.shape[0]] = face
             # Subject
-            img = cv2.putText(
-                img, "Subject", (num, 10), self.font, 0.4, (255, 255, 255)
-            )
+            img = cv2.putText(img, "Subject", (num, 10), self.font, 0.4, (255, 255, 255))
 
             # Add Prediction, Distance and Confidence
             img = cv2.putText(
                 img, "{}".format(name), (int(bbox[0, 0]), int(bbox[0, 1]) - 80), self.font, 0.7, (255, 255, 0)
             )
             img = cv2.putText(
-                img, "Emb-Dist: {:0.2f}".format(dist), (int(bbox[0, 0]), int(bbox[0, 1] - 60)), self.font, 0.7, self.color
+                img,
+                "Emb-Dist: {:0.2f}".format(dist),
+                (int(bbox[0, 0]), int(bbox[0, 1] - 60)),
+                self.font,
+                0.7,
+                self.color,
             )
             img = cv2.putText(
-                img, "ID-Conf: {:0.2f} %".format(id_conf * 100), (int(bbox[0, 0]), int(bbox[0, 1] - 40)), self.font, 0.7, self.color
+                img,
+                "ID-Conf: {:0.2f} %".format(id_conf * 100),
+                (int(bbox[0, 0]), int(bbox[0, 1] - 40)),
+                self.font,
+                0.7,
+                self.color,
             )
 
             # Add gal face onto img
             if name != "Other":
                 img[112 : 112 + gal_face.shape[1], num : num + gal_face.shape[0]] = gal_face
                 # Match
-                img = cv2.putText(
-                    img, "GalleryMatch", (num, 112+10), self.font, 0.4, (255, 255, 255)
-                )
+                img = cv2.putText(img, "GalleryMatch", (num, 112 + 10), self.font, 0.4, (255, 255, 255))
 
             num += 112
         return img
