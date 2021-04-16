@@ -12,7 +12,7 @@ setup(
     description="A lightweight face-recognition toolbox.",
     long_description=open("README.md").read(),
     install_requires=[
-        "setuptools~=51.0.0",
+        "setuptools>=51.0,<56.1",
         "opencv-python~=4.5.1.48",
         "numpy~=1.19.5",
         "tqdm~=4.59.0",
