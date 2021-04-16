@@ -16,7 +16,7 @@ setup(
         "opencv-python~=4.5.1.48",
         "numpy>=1.19.5,<1.21.0",
         "tqdm>=4.59,<4.61",
-        "scikit-image~=0.17.2",
+        "scikit-image>=0.17.2,<0.19.0",
         "matplotlib>=3.3.3,<3.5.0",
         "scipy>=1.4.1,<1.7.0",
         "scikit-learn~=0.24.0",
