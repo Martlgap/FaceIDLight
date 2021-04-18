@@ -3,15 +3,16 @@
 
 name: CI Testing
 
-on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build:
-
+  pytest:
+  
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -53,5 +54,3 @@ jobs:
       run: |
         coverage report
         
-        
-    
