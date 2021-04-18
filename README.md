@@ -4,6 +4,7 @@
 [![Last Commit](https://img.shields.io/github/last-commit/martlgap/FaceIDLight)](https://img.shields.io/github/last-commit/martlgap/FaceIDLight)
 [![License](https://img.shields.io/badge/license-MIT-blue)](https://img.shields.io/badge/license-MIT-blue)
 [![Downloads](https://img.shields.io/github/downloads/Martlgap/FaceIDLight/total)](https://img.shields.io/github/downloads/Martlgap/FaceIDLight/total)
+[![CI testing](https://github.com/Martlgap/FaceIDLight/actions/workflows/ci-testing.yml/badge.svg)](https://github.com/Martlgap/FaceIDLight/actions/workflows/ci-testing.yml)
 
 
 ## 📘 Description
