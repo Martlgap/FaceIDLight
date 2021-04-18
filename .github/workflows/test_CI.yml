@@ -34,7 +34,7 @@ jobs:
         pytest
     - name: Test Coverage
       run: |
-        coverage
+        pytest --cov
     - name: Statistics
       if: success()
       run: |
