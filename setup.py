@@ -11,9 +11,6 @@ setup(
     license="MIT",
     description="A lightweight face-recognition toolbox.",
     long_description=open("README.md").read(),
-    dependency_links=[
-        "https://google-coral.github.io/py-repo/tflite-runtime/",
-    ],
     install_requires=[
         "setuptools>=51.0,<56.1",
         "opencv-python~=4.5.1.48",
@@ -23,8 +20,5 @@ setup(
         "matplotlib>=3.3.3,<3.5.0",
         "scipy>=1.4.1,<1.7.0",
         "scikit-learn~=0.24.0",
-        "tflite-runtime==2.5.0"
     ],
-    include_package_data=True,
-    zip_safe=False,
 )

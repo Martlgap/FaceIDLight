@@ -27,11 +27,12 @@ Pull request are welcome!
 - [ ] GPU support
 - [ ] Resolution-dependent model-selection
 - [ ] Multithreading for multiple faces
+- [ ] Fix bug installing with setup.py (not finding external url for tflite-runtime)
 - [x] OpenCV Window freezes on MacOS when quitting (seemed to be fixed)
 
 
 ## 🥣 Requirements
-- [Python 3.8.8](https://www.python.org/)
+- [Python 3.8](https://www.python.org/)
 - [TensorflowLite-Runtime 2.5.0](https://www.tensorflow.org/lite/guide/python)
 - Additional Packages (included in FaceIDLight)
     - setuptools~=51.0.0
@@ -45,26 +46,10 @@ Pull request are welcome!
 
 
 ## ⚙️ How to install tflite-runtime
-### MacOS
 You can easily install tflite-runtime from https://google-coral.github.io/py-repo/ with the following line:
 ```zsh
-pip3 install --extra-index-url https://google-coral.github.io/py-repo/ tflite_runtime
+pip3 install tflite-runtime --find-links https://google-coral.github.io/py-repo/tflite-runtime
 ```
-
-
-### Linux
-Since pip3 `--extra-index-url` is not working properly on Linux systems, you need to directly point to a wheel 
-selected for your system manually from google-corals website: https://google-coral.github.io/py-repo/tflite-runtime
-```zsh
-pip3 install <link-to-your-wheel>
-``` 
-
-
-### Windows
-```zsh
-pip3 install <link-to-your-wheel>
-``` 
-
 
 ## ⚙️ How to install the FaceIDLight package
 Simply install the package via pip from git:
