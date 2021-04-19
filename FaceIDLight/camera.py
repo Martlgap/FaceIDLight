@@ -48,7 +48,7 @@ class Camera:
 
     # Get current frame
     def get_frame(self):
-        return self.ret, self.curr entFrame
+        return self.ret, self.currentFrame
 
     def screen(self, function):
         self.thread.start()
