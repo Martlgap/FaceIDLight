@@ -1,4 +1,6 @@
 from FaceIDLight.tools import FaceDetection, FaceRecognition
+from FaceIDLight.camera import Camera
+from FaceIDLight.demo import Demonstrator
 import cv2
 import pytest
 import numpy as np
@@ -45,3 +47,15 @@ def test_recognition():
     face = cv2.imread('tests/data/face.png')
     emb = recognizer.get_emb(face[None])
     assert (emb[0] == json.load(open('tests/data/detections.json', 'r'))['face_emb'][0]).all()
+
+
+@pytest.mark.camera
+def test_camera():
+    camera = Camera()
+    demo = Demonstrator()
+    demo.run()
+    assert camera
+
+
+
+
