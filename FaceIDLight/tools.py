@@ -57,7 +57,9 @@ class FaceID:
         self.gal_names = []
         self.gal_faces = []
         self.gal_dir = (
-            gal_dir if gal_dir is not None else get_file(BASE_URL + "sample_gallery.zip", FILE_HASHES["sample_gallery"], is_zip=True)
+            gal_dir
+            if gal_dir is not None
+            else get_file(BASE_URL + "sample_gallery.zip", FILE_HASHES["sample_gallery"], is_zip=True)
         )
         self.update_gallery()
 
@@ -155,9 +157,7 @@ class FaceRecognition:
         dist = distance.cosine(emb1, emb2)
         prediction = thresh > np.squeeze(dist, axis=-1)
         confidence = (
-            ((thresh - dist) / thresh) / 2 + 0.5
-            if prediction
-            else ((dist - thresh) / (1.4 - thresh)) / 2 + 0.5
+            ((thresh - dist) / thresh) / 2 + 0.5 if prediction else ((dist - thresh) / (1.4 - thresh)) / 2 + 0.5
         )
         return prediction, np.squeeze(dist, axis=-1), confidence
 
@@ -226,15 +226,9 @@ class FaceDetection:
         self._min_face_size = min_face_size
         self._steps_threshold = steps_threshold
         self._scale_factor = scale_factor
-        self.p_net = tflite.Interpreter(
-            model_path=get_file(BASE_URL + "p_net.tflite", FILE_HASHES["p_net"])
-        )
-        self.r_net = tflite.Interpreter(
-            model_path=get_file(BASE_URL + "r_net.tflite", FILE_HASHES["r_net"])
-        )
-        self.o_net = tflite.Interpreter(
-            model_path=get_file(BASE_URL + "o_net.tflite", FILE_HASHES["o_net"])
-        )
+        self.p_net = tflite.Interpreter(model_path=get_file(BASE_URL + "p_net.tflite", FILE_HASHES["p_net"]))
+        self.r_net = tflite.Interpreter(model_path=get_file(BASE_URL + "r_net.tflite", FILE_HASHES["r_net"]))
+        self.o_net = tflite.Interpreter(model_path=get_file(BASE_URL + "o_net.tflite", FILE_HASHES["o_net"]))
 
     def detect_faces(self, img):
         """
@@ -532,7 +526,7 @@ class FaceDetection:
         for k in range(0, num_boxes):
             tmp = np.zeros((int(stage_status.tmp_h[k]), int(stage_status.tmp_w[k]), 3))
 
-            tmp[stage_status.dy[k] - 1 : stage_status.edy[k], stage_status.dx[k] - 1 : stage_status.edx[k], :,] = img[
+            tmp[stage_status.dy[k] - 1 : stage_status.edy[k], stage_status.dx[k] - 1 : stage_status.edx[k], :] = img[
                 stage_status.y[k] - 1 : stage_status.ey[k],
                 stage_status.x[k] - 1 : stage_status.ex[k],
                 :,

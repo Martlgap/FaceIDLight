@@ -48,7 +48,7 @@ class Camera:
 
     # Get current frame
     def get_frame(self):
-        return self.ret, self.currentFrame
+        return self.ret, self.curr entFrame
 
     def screen(self, function):
         self.thread.start()
@@ -62,7 +62,7 @@ class Camera:
                 frame = cv2.putText(
                     frame,
                     "FPS{:5.1f}".format(1 / (time.time() - last)),
-                    (frame.shape[1]-80, 30),
+                    (frame.shape[1] - 80, 30),
                     cv2.FONT_HERSHEY_PLAIN,
                     1,
                     (0, 255, 0),

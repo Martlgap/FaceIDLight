@@ -1,6 +1,4 @@
 from FaceIDLight.tools import FaceDetection, FaceRecognition
-from FaceIDLight.camera import Camera
-from FaceIDLight.demo import Demonstrator
 import cv2
 import pytest
 import numpy as np
