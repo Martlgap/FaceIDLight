@@ -44,6 +44,10 @@ jobs:
         pip --version
         pip list
       shell: bash
+      
+    - name: Flake8 Test
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --format github
         
     - name: Test with pytest-cov
       run: |
