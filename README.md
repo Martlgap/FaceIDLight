@@ -34,15 +34,6 @@ Pull request are welcome!
 ## 🥣 Requirements
 - [Python 3.8](https://www.python.org/)
 - [TensorflowLite-Runtime 2.5.0](https://www.tensorflow.org/lite/guide/python)
-- Additional Packages (included in FaceIDLight)
-    - setuptools~=51.0.0
-    - opencv-python~=4.5.1.48
-    - numpy~=1.19.5
-    - tqdm~=4.59.0
-    - scikit-image~=0.18.1
-    - matplotlib~=3.3.3
-    - scipy~=1.6.0
-    - scikit-learn~=0.24.0
 
 
 ## ⚙️ How to install tflite-runtime
@@ -89,7 +80,7 @@ This image shows an example of the `Demonstrator()`:
 ## 🙏 Acknowledgement
 - Thanks to Iván de Paz Centeno for his [implementation](https://github.com/ipazc/mtcnn) 
   of [MTCNN](https://arxiv.org/abs/1604.02878) in [Tensorflow 2](https://www.tensorflow.org/). 
-  The MTCNN tflite models are taken "as is" from his repository and were converted to tflite-models afterwards.
+  The MTCNN model weights are taken "as is" from his repository and were converted to tflite-models afterwards.
 - Thanks to Kuan-Yu Huang for his [implementation](https://github.com/peteryuX/arcface-tf2) 
   of [ArcFace](https://arxiv.org/abs/1801.07698) in [Tensorflow 2](https://www.tensorflow.org/).
 - We trained all provided models with the [MS1M](https://arxiv.org/abs/1607.08221) dataset.
