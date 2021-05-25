@@ -2,7 +2,7 @@
 opencv-python~=4.5.2.52
 setuptools~=56.2.0
 numpy~=1.20.3
-tqdm~=4.60.0
+tqdm~=4.61.0
 scikit-image~=0.18.1
 matplotlib~=3.4.2
 scikit-learn~=0.24.2
