@@ -57,4 +57,13 @@ jobs:
       if: success()
       run: |
         coverage report
-        
+
+  automerge:
+    needs: pytest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v1
+        if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+        with:
+          github-token: ${{secrets.github_token}}
+          merge-method: 'merge'
