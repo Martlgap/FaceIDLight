@@ -88,4 +88,10 @@ This image shows an example of the `Demonstrator()`:
 
 ## 📚 BibTex
 If you use our trained models and want to cite our work feel free to use this:
-TODO
+[Image Resolution Susceptibility of Face Recognition Models](https://arxiv.org/abs/2107.03769)
+
+>@inproceedings{Knoche2021ImageRS,<br>
+  title={Image Resolution Susceptibility of Face Recognition Models},<br>
+  author={Martin Knoche and Stefan Hormann and Gerhard Rigoll},<br>
+  year={2021}<br>
+}
