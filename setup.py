@@ -19,6 +19,6 @@ setup(
         "scikit-image>=0.17.2,<0.19.0",
         "matplotlib>=3.3.3,<3.5.0",
         "scipy>=1.4.1,<1.8.0",
-        "scikit-learn~=0.24.0",
+        "scikit-learn>=0.24,<1.1",
     ],
 )
