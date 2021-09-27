@@ -62,7 +62,7 @@ jobs:
     needs: pytest
     runs-on: ubuntu-latest
     steps:
-      - uses: fastify/github-action-merge-dependabot@v1
+      - uses: fastify/github-action-merge-dependabot@v2.1.1
         if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
         with:
           GITHUB_TOKEN: ${{secrets.automerge_token}}
