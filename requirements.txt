@@ -1,5 +1,5 @@
 
-opencv-python~=4.5.3.56
+opencv-python~=4.5.4.58
 setuptools~=58.2.0
 numpy~=1.21.2
 tqdm~=4.62.3
