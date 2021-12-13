@@ -1,5 +1,5 @@
 opencv-python~=4.5.4.60
-setuptools~=59.5.0
+setuptools~=59.6.0
 numpy~=1.21.4
 tqdm~=4.62.3
 scikit-image~=0.19.0
