@@ -5,4 +5,4 @@ tqdm~=4.62.3
 scikit-image~=0.19.1
 matplotlib~=3.5.1
 scikit-learn~=1.0
-scipy~=1.7.3
+scipy~=1.8.0
