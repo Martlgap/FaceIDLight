@@ -39,7 +39,7 @@ Pull request are welcome!
 ## ⚙️ How to install tflite-runtime
 You can easily install tflite-runtime from https://google-coral.github.io/py-repo/ with the following line:
 ```zsh
-pip3 install tflite-runtime --find-links https://google-coral.github.io/py-repo/tflite-runtime
+pip3 install tflite-runtime==2.5.0 --find-links https://google-coral.github.io/py-repo/tflite-runtime
 ```
 
 ## ⚙️ How to install the FaceIDLight package
