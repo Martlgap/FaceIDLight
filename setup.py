@@ -14,7 +14,7 @@ setup(
     install_requires=[
         "setuptools>=51.0,<62.7",
         "opencv-python>=4.5.1.48,<4.6.1.0",
-        "numpy>=1.19.5,<1.23.0",
+        "numpy>=1.19.5,<1.24.0",
         "tqdm>=4.59,<4.65",
         "scikit-image>=0.17.2,<0.20.0",
         "matplotlib>=3.3.3,<3.6.0",
