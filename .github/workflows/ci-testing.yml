@@ -51,7 +51,7 @@ jobs:
         
     - name: Test with pytest-cov
       run: |
-       coverage run --source FaceIDLight -m py.test FaceIDLight tests -v
+       coverage run --source FaceIDLight -m pytest FaceIDLight tests -v
        
     - name: Statistics
       if: success()
