@@ -17,7 +17,7 @@ setup(
         "numpy>=1.19.5,<1.24.0",
         "tqdm>=4.59,<4.65",
         "scikit-image>=0.17.2,<0.20.0",
-        "matplotlib>=3.3.3,<3.7.0",
+        "matplotlib>=3.3.3,<3.8.0",
         "scipy>=1.4.1,<1.10.0",
         "scikit-learn>=0.24,<1.2",
     ],
