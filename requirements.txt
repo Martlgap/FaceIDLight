@@ -1,6 +1,6 @@
 numpy~=1.23.4
 opencv-python~=4.6.0.66
-setuptools~=67.3.1
+setuptools~=67.3.2
 tqdm~=4.64.1
 scikit-image~=0.19.3
 scipy~=1.9.3
