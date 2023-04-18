@@ -51,7 +51,13 @@ class Demonstrator:
                 conf,
             ) = detections
             name, gal_face, dist, id_conf = ids
+            
+            # Bbox as int
+            bbox = bbox.astype(int)
 
+            # Points as int
+            points = points.astype(int)
+            
             # Add BoundingBox
             img = cv2.rectangle(img, tuple(bbox[0]), tuple(bbox[1]), self.color)
 
