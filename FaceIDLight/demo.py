@@ -51,7 +51,7 @@ class Demonstrator:
                 conf,
             ) = detections
             name, gal_face, dist, id_conf = ids
-
+            
             # Bbox as int
             bbox = bbox.astype(int)
 
