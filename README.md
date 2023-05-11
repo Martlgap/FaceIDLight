@@ -35,14 +35,7 @@ Pull request are welcome!
 - [Python 3.8](https://www.python.org/)
 - [TensorflowLite-Runtime 2.5.0](https://www.tensorflow.org/lite/guide/python)
 
-
-## ⚙️ How to install tflite-runtime
-You can easily install tflite-runtime from https://google-coral.github.io/py-repo/ with the following line:
-```zsh
-pip3 install tflite-runtime==2.5.0 --find-links https://google-coral.github.io/py-repo/tflite-runtime
-```
-
-## ⚙️ How to install the FaceIDLight package
+## ⚙️ How to install the FaceIDLight as a package
 Simply install the package via pip from git:
 ```zsh
 pip3 install git+https://github.com/martlgap/FaceIDLight
@@ -52,6 +45,22 @@ or if you do not have git installed on your system, install it directly from the
 pip3 install https://github.com/Martlgap/FaceIDLight/releases/download/v.0.1/FaceIDLight-0.1-py3-none-any.whl
 ``` 
 
+## ⚙️ How to use the FaceIDLight as Repo
+Clone the repository, init a virtual environment and install the requirements:
+```zsh
+git clone https://github.com/Martlgap/FaceIDLight.git
+cd FaceIDLight
+python3.8 -m venv venv
+pip3 install -r requirements.txt
+```
+
+## ⚙️ How to install tflite-runtime
+If you have troubles to install tflite-runtime:
+
+You can easily install tflite-runtime from https://google-coral.github.io/py-repo/ with the following line:
+```zsh
+pip3 install tflite-runtime==2.5.0 --find-links https://google-coral.github.io/py-repo/tflite-runtime
+```
 
 ## 🚀 Run Demo:
 Run Python 3.8 and type in:

@@ -20,5 +20,6 @@ setup(
         "matplotlib>=3.3.3,<3.8.0",
         "scipy>=1.4.1,<1.11.0",
         "scikit-learn>=0.24,<1.2",
+        "tflite-runtime>=2.5.0,<2.8.0",
     ],
 )

@@ -25,4 +25,4 @@
 
 from FaceIDLight.demo import Demonstrator
 
-Demonstrator().run()
+Demonstrator(gal_dir="./sample_gal", model_type="resNet").run()

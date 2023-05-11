@@ -32,10 +32,10 @@ from FaceIDLight.tools import FaceID
 
 
 class Demonstrator:
-    def __init__(self, gal_dir=None, stream_id=0):
+    def __init__(self, gal_dir: str = None, stream_id: int = 0, model_type: str = "mobileNet"):
         # Initialization
         self.cam = Camera(stream_id=stream_id)
-        self.FaceID = FaceID(gal_dir=gal_dir)
+        self.FaceID = FaceID(gal_dir=gal_dir, model_type=model_type)
 
         # Set OpenCV defaults
         self.color = (0, 0, 255)
@@ -51,6 +51,12 @@ class Demonstrator:
                 conf,
             ) = detections
             name, gal_face, dist, id_conf = ids
+
+            # Bbox as int
+            bbox = bbox.astype(int)
+
+            # Point as int
+            points = points.astype(int)
 
             # Add BoundingBox
             img = cv2.rectangle(img, tuple(bbox[0]), tuple(bbox[1]), self.color)

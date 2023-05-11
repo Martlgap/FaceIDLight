@@ -44,15 +44,15 @@ FILE_HASHES = {
     "p_net": "530183192e24f7cc86b6706e1eb600482c4ed4306399ac939c472e3957bae15e",
     "r_net": "5ec33b065eb2802bc4c2575d21feff1a56958d854785bc3e2907d3b7ace861a2",
     "mobileNet": "6c19b789f661caa8da735566490bfd8895beffb2a1ec97a56b126f0539991aa6",
-    "resNet50": "f4d8b0194957a3ad766135505fc70a91343660151a8103bbb6c3b8ac34dbb4e2",
+    "resNet": "f4d8b0194957a3ad766135505fc70a91343660151a8103bbb6c3b8ac34dbb4e2",
     "sample_gallery": "9f43a83c89a8099e1f3aab75ed9531f932f1b392bea538d6afe52509587438d4",
 }
 
 
 class FaceID:
-    def __init__(self, gal_dir: str = None):
+    def __init__(self, gal_dir: str = None, model_type: str = "mobileNet"):
         self.detector = FaceDetection()
-        self.recognizer = FaceRecognition()
+        self.recognizer = FaceRecognition(model_type=model_type)
         self.gal_embs = []
         self.gal_names = []
         self.gal_faces = []
