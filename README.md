@@ -83,7 +83,7 @@ Press "q" to close the Demo. (Window has to be selected)
 
 ## 📺 Example
 This image shows an example of the `Demonstrator()`:
-![example_image](./examples/screenshot.png)
+![example_image](./screenshot.png)
 
 
 ## 🙏 Acknowledgement
