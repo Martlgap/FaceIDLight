@@ -25,4 +25,4 @@
 
 from FaceIDLight.demo import Demonstrator
 
-Demonstrator(gal_dir="./sample_gal", model_type="FaceTransformerOctupletLoss").run()
+Demonstrator(gal_dir="./sample_gal", model_type="MobileNetV2").run()

@@ -32,7 +32,7 @@ from FaceIDLight.tools import FaceID
 
 
 class Demonstrator:
-    def __init__(self, gal_dir: str = None, stream_id: int = 0, model_type: str = "mobileNet"):
+    def __init__(self, gal_dir: str = None, stream_id: int = 0, model_type: str = "MobileNetV2"):
         # Initialization
         self.cam = Camera(stream_id=stream_id)
         self.FaceID = FaceID(gal_dir=gal_dir, model_type=model_type)
