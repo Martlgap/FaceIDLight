@@ -47,11 +47,13 @@ FILE_HASHES = {
     "mobileNet": "6c19b789f661caa8da735566490bfd8895beffb2a1ec97a56b126f0539991aa6",
     "resNet": "f4d8b0194957a3ad766135505fc70a91343660151a8103bbb6c3b8ac34dbb4e2",
     "sample_gallery": "9f43a83c89a8099e1f3aab75ed9531f932f1b392bea538d6afe52509587438d4",
+    "MobileNetV2": "6f53fb10f0db558403f73cfe744a96b12d763bdf1294a38d14ef14307d61ecf3",
+    "FaceTransformerOctupletLoss": "aa995cce8b137ccdc65b394cc57c6b1fdafc7012ce5197e62a4cf8d8e61db4f2",
 }
 
 
 class FaceID:
-    def __init__(self, gal_dir: str = None, model_type: str = "mobileNet"):
+    def __init__(self, gal_dir: str = None, model_type: str = "MobileNetV2"):
         self.detector = FaceDetection()
         self.recognizer = FaceRecognition(model_type=model_type)
         self.gal_embs = []
@@ -127,15 +129,16 @@ def tflite_inference(model, imgs):
 
 
 def onnx_inference(model, imgs):
-    return model.run(None, {"input_image": imgs.astype(np.float32)})[0]
+    return model.run(None, {"input_image": imgs.astype(np.float32)})
 
 
 class FaceRecognition:
     def __init__(
         self,
         model_path: str = None,
-        model_type: str = "mobileNet",
+        model_type: str = "MobileNetV2",
     ):
+        self.model_type = model_type
         if model_path is None:
             model_path = get_file(BASE_URL + model_type + ".onnx", FILE_HASHES[model_type])
         self.face_recognizer = rt.InferenceSession(model_path, providers=rt.get_available_providers())
@@ -148,7 +151,14 @@ class FaceRecognition:
         Alignment:
         Must be like specified TODO
         """
-        return onnx_inference(self.face_recognizer, img)
+
+        if self.model_type == "MobileNetV2":
+            return onnx_inference(self.face_recognizer, img)
+        elif self.model_type == "FaceTransformerOctupletLoss":
+            img = (np.transpose(img, [0, 3, 1, 2]) * 255.0).clip(0.0, 255.0)
+            return onnx_inference(self.face_recognizer, img)
+        else:
+            raise NotImplementedError
 
     @staticmethod
     def verify(emb1, emb2, thresh):
