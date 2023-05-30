@@ -27,6 +27,7 @@
 
 
 import tflite_runtime.interpreter as tflite
+import onnxruntime as rt
 import cv2
 import numpy as np
 import os
@@ -110,7 +111,7 @@ class FaceID:
         return out
 
 
-def tflite_inference(model, img):
+def tflite_inference(model, imgs):
     """Inferences an image through the model with tflite interpreter on CPU
     :param model: a tflite.Interpreter loaded with a model
     :param img: image
@@ -118,11 +119,15 @@ def tflite_inference(model, img):
     """
     input_details = model.get_input_details()
     output_details = model.get_output_details()
-    model.resize_tensor_input(input_details[0]["index"], img.shape)
+    model.resize_tensor_input(input_details[0]["index"], imgs.shape)
     model.allocate_tensors()
-    model.set_tensor(input_details[0]["index"], img.astype(np.float32))
+    model.set_tensor(input_details[0]["index"], imgs.astype(np.float32))
     model.invoke()
     return [model.get_tensor(elem["index"]) for elem in output_details]
+
+
+def onnx_inference(model, imgs):
+    return model.run(None, {"input_image": imgs.astype(np.float32)})[0]
 
 
 class FaceRecognition:
@@ -132,8 +137,8 @@ class FaceRecognition:
         model_type: str = "mobileNet",
     ):
         if model_path is None:
-            model_path = get_file(BASE_URL + model_type + ".tflite", FILE_HASHES[model_type])
-        self.face_recognizer = tflite.Interpreter(model_path=model_path)
+            model_path = get_file(BASE_URL + model_type + ".onnx", FILE_HASHES[model_type])
+        self.face_recognizer = rt.InferenceSession(model_path, providers=rt.get_available_providers())
 
     def get_emb(self, img):
         """inferences a facial image through the face recognition model
@@ -143,7 +148,7 @@ class FaceRecognition:
         Alignment:
         Must be like specified TODO
         """
-        return tflite_inference(self.face_recognizer, img)
+        return onnx_inference(self.face_recognizer, img)
 
     @staticmethod
     def verify(emb1, emb2, thresh):
