@@ -18,7 +18,7 @@ setup(
         "tqdm>=4.59,<4.66",
         "scikit-image>=0.17.2,<0.22.0",
         "matplotlib>=3.3.3,<3.8.0",
-        "scipy>=1.4.1,<1.11.0",
+        "scipy>=1.4.1,<1.12.0",
         "scikit-learn>=0.24,<1.3",
         "tflite-runtime>=2.7.0,<2.13.0",
     ],
