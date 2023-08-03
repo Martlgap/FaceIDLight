@@ -49,11 +49,13 @@ FILE_HASHES = {
     "sample_gallery": "9f43a83c89a8099e1f3aab75ed9531f932f1b392bea538d6afe52509587438d4",
     "MobileNetV2": "6f53fb10f0db558403f73cfe744a96b12d763bdf1294a38d14ef14307d61ecf3",
     "FaceTransformerOctupletLoss": "aa995cce8b137ccdc65b394cc57c6b1fdafc7012ce5197e62a4cf8d8e61db4f2",
+    "ResNet50":
+    "2816d8f4e455525e5f31cd511e1c3f2f677efceefda9fc114e3ac350acc681b7"
 }
 
 
 class FaceID:
-    def __init__(self, gal_dir: str = None, model_type: str = "MobileNetV2"):
+    def __init__(self, gal_dir: str = None, model_type: str = "ResNet50"):
         self.detector = FaceDetection()
         self.recognizer = FaceRecognition(model_type=model_type)
         self.gal_embs = []
@@ -128,8 +130,11 @@ def tflite_inference(model, imgs):
     return [model.get_tensor(elem["index"]) for elem in output_details]
 
 
-def onnx_inference(model, imgs):
-    return model.run(None, {"input_image": imgs.astype(np.float32)})
+def onnx_inference(model, imgs, isfrom_tf=False):
+    if isfrom_tf:
+        return model.run(None, {"args_0": imgs.astype(np.float32)})
+    else:
+        return model.run(None, {"input_image": imgs.astype(np.float32)})
 
 
 class FaceRecognition:
@@ -154,6 +159,8 @@ class FaceRecognition:
 
         if self.model_type == "MobileNetV2":
             return onnx_inference(self.face_recognizer, img)
+        elif self.model_type == "ResNet50":
+            return onnx_inference(self.face_recognizer, img, isfrom_tf=True)
         elif self.model_type == "FaceTransformerOctupletLoss":
             img = (np.transpose(img, [0, 3, 1, 2]) * 255.0).clip(0.0, 255.0)
             return onnx_inference(self.face_recognizer, img)
