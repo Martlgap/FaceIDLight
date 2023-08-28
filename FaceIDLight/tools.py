@@ -28,6 +28,7 @@
 
 import tflite_runtime.interpreter as tflite
 import onnxruntime as rt
+import mediapipe as mp
 import cv2
 import numpy as np
 import os
@@ -49,14 +50,13 @@ FILE_HASHES = {
     "sample_gallery": "9f43a83c89a8099e1f3aab75ed9531f932f1b392bea538d6afe52509587438d4",
     "MobileNetV2": "6f53fb10f0db558403f73cfe744a96b12d763bdf1294a38d14ef14307d61ecf3",
     "FaceTransformerOctupletLoss": "aa995cce8b137ccdc65b394cc57c6b1fdafc7012ce5197e62a4cf8d8e61db4f2",
-    "ResNet50":
-    "2816d8f4e455525e5f31cd511e1c3f2f677efceefda9fc114e3ac350acc681b7"
+    "ResNet50": "2816d8f4e455525e5f31cd511e1c3f2f677efceefda9fc114e3ac350acc681b7",
 }
 
 
 class FaceID:
-    def __init__(self, gal_dir: str = None, model_type: str = "ResNet50"):
-        self.detector = FaceDetection()
+    def __init__(self, gal_dir: str = None, model_type: str = "ResNet50", detector_type: str = "MTCNN"):
+        self.detector = FaceDetection(detector_type=detector_type)
         self.recognizer = FaceRecognition(model_type=model_type)
         self.gal_embs = []
         self.gal_names = []
@@ -233,8 +233,12 @@ class FaceDetection:
 
     def __init__(
         self,
+        detector_type,
         min_face_size: int = 40,
         steps_threshold: list = None,
+        max_num_faces: int = 2,
+        min_detection_confidence: float = 0.5,
+        min_tracking_confidence: float = 0.5,
         scale_factor: float = 0.7,
     ):
         """
@@ -243,14 +247,26 @@ class FaceDetection:
         :param steps_threshold: step's thresholds values
         :param scale_factor: scale factor
         """
-        if steps_threshold is None:
-            steps_threshold = [0.6, 0.7, 0.7]  # original mtcnn values [0.6, 0.7, 0.7]
-        self._min_face_size = min_face_size
-        self._steps_threshold = steps_threshold
-        self._scale_factor = scale_factor
-        self.p_net = tflite.Interpreter(model_path=get_file(BASE_URL + "p_net.tflite", FILE_HASHES["p_net"]))
-        self.r_net = tflite.Interpreter(model_path=get_file(BASE_URL + "r_net.tflite", FILE_HASHES["r_net"]))
-        self.o_net = tflite.Interpreter(model_path=get_file(BASE_URL + "o_net.tflite", FILE_HASHES["o_net"]))
+        if detector_type == "MTCNN":
+            if steps_threshold is None:
+                steps_threshold = [0.6, 0.7, 0.7]  # original mtcnn values [0.6, 0.7, 0.7]
+            self._min_face_size = min_face_size
+            self._steps_threshold = steps_threshold
+            self._scale_factor = scale_factor
+            self.p_net = tflite.Interpreter(model_path=get_file(BASE_URL + "p_net.tflite", FILE_HASHES["p_net"]))
+            self.r_net = tflite.Interpreter(model_path=get_file(BASE_URL + "r_net.tflite", FILE_HASHES["r_net"]))
+            self.o_net = tflite.Interpreter(model_path=get_file(BASE_URL + "o_net.tflite", FILE_HASHES["o_net"]))
+        elif detector_type == "Mediapipe":
+            self.mp_face_mesh = mp.solutions.face_mesh.FaceMesh(
+                refine_landmarks=True,
+                max_num_faces=max_num_faces,
+                min_detection_confidence=min_detection_confidence,
+                min_tracking_confidence=min_tracking_confidence,
+            )
+        else:
+            raise NotImplementedError
+        
+        self.detector_type = detector_type
 
     def detect_faces(self, img):
         """
@@ -270,7 +286,77 @@ class FaceDetection:
 
         # TODO check if HD or UHD or 4K -> lower the resolution for performance!
 
+        if self.detector_type == "MTCNN":
+            detections = self.__detect_faces_mtcnn(img)
+        elif self.detector_type == "Mediapipe":
+            detections = self.__detect_faces_mediapipe(img)
+        else:
+            raise NotImplementedError
+
+        return detections
+
+    def __detect_faces_mediapipe(self, img):
+        """
+
+        Args:
+            img (_type_): _description_
+        """
+
         height, width, _ = img.shape
+
+        results = self.mp_face_mesh.process(img)
+
+        # Get the Bounding Boxes from the detected faces
+        detections = []
+        if results.multi_face_landmarks:
+            for landmarks in results.multi_face_landmarks:
+                sortidx = [3, 4, 0, 1, 2]
+                x_coords = np.asarray([
+                    landmark.x * width for idx, landmark in enumerate(landmarks.landmark) if idx in [470, 475, 1, 57, 287]
+                ])[sortidx]
+                y_coords = np.asarray([
+                    landmark.y * height for idx, landmark in enumerate(landmarks.landmark) if idx in [470, 475, 1, 57, 287]
+                ])[sortidx]
+
+                points_c = np.array([x_coords, y_coords]).transpose().astype(np.float32)
+
+                x_coords = [
+                    landmark.x * width for landmark in landmarks.landmark
+                ]
+                y_coords = [
+                    landmark.y * height for landmark in landmarks.landmark
+                ]
+
+                x_min, x_max = int(min(x_coords)), int(max(x_coords))
+                y_min, y_max = int(min(y_coords)), int(max(y_coords))
+
+                bboxes_c = np.array([[x_min, y_min], [x_max, y_max]]).astype(np.float32)
+
+                conf = 1 # Mediapipe does not provide a confidence value -> so we set it to 1
+
+                detections.append([bboxes_c, points_c, conf])
+                
+        
+        return detections
+
+    def __detect_faces_mtcnn(self, img):
+        """
+        Detects bounding boxes from the specified image.
+        :param img: image to process
+        :return: list containing all the bounding boxes detected with their keypoints.
+
+        From MTCNN:
+        # Total boxes (bBoxes for faces)
+        # 1. dim -> Number of found Faces
+        # 2. dim -> x_min, y_min, x_max, y_max, score
+
+        # Points (Landmarks left eye, right eye, nose, left mouth, right mouth)
+        # 1. dim -> Number of found Faces
+        # 2. dim -> x1, x2, x3, x4, x5, y2, y2, y3, y4, y5 Coordinates
+        """
+
+        height, width, _ = img.shape
+
         stage_status = StageStatus(width=width, height=height)
         m = 12 / self._min_face_size
         min_layer = np.amin([height, width]) * m
@@ -323,7 +409,6 @@ class FaceDetection:
 
     @staticmethod
     def __generate_bounding_box(imap, reg, scale, t):
-
         # use heatmap to generate bounding boxes
         stride = 2
         cellsize = 12
@@ -608,7 +693,6 @@ class FaceDetection:
         tempimg = np.zeros((48, 48, 3, num_boxes))
 
         for k in range(0, num_boxes):
-
             tmp = np.zeros((int(status.tmp_h[k]), int(status.tmp_w[k]), 3))
 
             tmp[status.dy[k] - 1 : status.edy[k], status.dx[k] - 1 : status.edx[k], :] = img[

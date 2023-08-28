@@ -6,4 +6,5 @@ scikit-learn
 scipy
 tflite-runtime
 onnxruntime
+mediapipe
 tqdm
