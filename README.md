@@ -32,7 +32,7 @@ Pull request are welcome!
 
 
 ## 🥣 Requirements
-- [Python 3.8](https://www.python.org/)
+- [Python 3.9](https://www.python.org/)
 - [TensorflowLite-Runtime 2.5.0](https://www.tensorflow.org/lite/guide/python)
 
 ## ⚙️ How to install the FaceIDLight as a package
