@@ -59,7 +59,7 @@ If you have troubles to install tflite-runtime:
 
 You can easily install tflite-runtime from https://google-coral.github.io/py-repo/ with the following line:
 ```zsh
-pip3 install tflite-runtime==2.5.0 --find-links https://google-coral.github.io/py-repo/tflite-runtime
+pip3 install tflite-runtime==2.5.0.post1 --find-links https://google-coral.github.io/py-repo/tflite-runtime
 ```
 
 ## 🚀 Run Demo:
