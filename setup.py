@@ -19,7 +19,7 @@ setup(
         "scikit-image>=0.17.2,<0.24.0",
         "matplotlib>=3.3.3,<3.10.0",
         "scipy>=1.4.1,<1.14.0",
-        "scikit-learn>=0.24,<1.5",
+        "scikit-learn>=0.24,<1.6",
         "tflite-runtime==2.14.0",
     ],
 )
