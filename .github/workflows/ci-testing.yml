@@ -39,7 +39,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install --requirement requirements.txt --upgrade --quiet
         pip install --requirement tests/requirements.txt --quiet
-        pip install tflite-runtime==2.5.0.post1 --find-links https://google-coral.github.io/py-repo/tflite-runtime/ --quiet
         python --version
         pip --version
         pip list
