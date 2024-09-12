@@ -1,8 +1,7 @@
-numpy==2.0.0
-opencv-python
-Pillow
-scikit-image
-scikit-learn
-scipy
-tflite-runtime
-tqdm
+numpy==1.26.4
+opencv-python==4.10.1.0
+scikit-image==0.25.0
+scikit-learn==1.5.2
+scipy==1.15.0
+tflite-runtime==2.14.0
+tqdm==4.67
