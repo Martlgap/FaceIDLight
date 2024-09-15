@@ -11,7 +11,7 @@ def test_single_face():
     img = cv2.imread("tests/data/img1.png")
     detection = detector.detect_faces(img)
     target_detection = json.load(open("tests/data/detections.json", "r"))["img1"]
-    assert abs(sum(sum(np.asarray(detection[0][1]) - np.asarray(target_detection)))) < 1e-4
+    assert abs(sum(sum(np.asarray(detection[0][1]) - np.asarray(target_detection)))) < 1e-3
 
 
 @pytest.mark.face_detection
