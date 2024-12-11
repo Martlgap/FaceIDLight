@@ -53,7 +53,8 @@ class Camera:
     def screen(self, function):
         self.thread.start()
         window_name = "Streaming from {}".format(self.stream_id)
-        cv2.namedWindow(window_name)
+        cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE); # Delete this to have normal window
         last = 0
         while True:
             ret, frame = self.get_frame()
