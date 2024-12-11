@@ -33,6 +33,7 @@ import cv2
 import numpy as np
 import os
 import glob
+import time
 from skimage.transform import SimilarityTransform
 from FaceIDLight.helper import get_file
 from scipy.spatial import distance
@@ -53,14 +54,24 @@ FILE_HASHES = {
     "ResNet50": "2816d8f4e455525e5f31cd511e1c3f2f677efceefda9fc114e3ac350acc681b7",
 }
 
+INTERMEDIATE_RESOLUTION = 320
 
 class FaceID:
     def __init__(self, gal_dir: str = None, model_type: str = "ResNet50", detector_type: str = "MTCNN"):
         self.detector = FaceDetection(detector_type=detector_type)
         self.recognizer = FaceRecognition(model_type=model_type)
+        self.model_type = model_type
         self.gal_embs = []
         self.gal_names = []
         self.gal_faces = []
+
+        if model_type == "MobileNetV2":
+            self.tresh = 0.6
+        elif model_type == "ResNet50":
+            self.tresh = 0.6
+        elif model_type == "FaceTransformerOctupletLoss":
+            self.tresh = 0.26
+
         self.gal_dir = (
             gal_dir
             if gal_dir is not None
@@ -99,7 +110,7 @@ class FaceID:
         embs = self.recognizer.get_emb(np.asarray(faces))[0]  # RGB float32 [0..1]
         ids = []
         for i in range(embs.shape[0]):
-            pred, dist, conf = self.recognizer.identify(np.expand_dims(embs[i], axis=0), self.gal_embs, thresh=0.6)
+            pred, dist, conf = self.recognizer.identify(np.expand_dims(embs[i], axis=0), self.gal_embs, thresh=self.tresh)
             ids.append(
                 [
                     self.gal_names[pred] if pred is not None else "Other",
@@ -236,7 +247,7 @@ class FaceDetection:
         detector_type,
         min_face_size: int = 40,
         steps_threshold: list = None,
-        max_num_faces: int = 2,
+        max_num_faces: int = 20,
         min_detection_confidence: float = 0.5,
         min_tracking_confidence: float = 0.5,
         scale_factor: float = 0.7,
@@ -259,6 +270,7 @@ class FaceDetection:
         elif detector_type == "Mediapipe":
             self.mp_face_mesh = mp.solutions.face_mesh.FaceMesh(
                 refine_landmarks=True,
+                static_image_mode=True,
                 max_num_faces=max_num_faces,
                 min_detection_confidence=min_detection_confidence,
                 min_tracking_confidence=min_tracking_confidence,
@@ -303,6 +315,11 @@ class FaceDetection:
         """
 
         height, width, _ = img.shape
+        
+        scale = 1
+        if img.shape[0] > INTERMEDIATE_RESOLUTION:
+            scale = INTERMEDIATE_RESOLUTION / img.shape[0]
+            img = cv2.resize(img, (0, 0), fx=scale, fy=scale)
 
         results = self.mp_face_mesh.process(img)
 
@@ -321,14 +338,14 @@ class FaceDetection:
                 points_c = np.array([x_coords, y_coords]).transpose().astype(np.float32)
 
                 x_coords = [
-                    landmark.x * width for landmark in landmarks.landmark
+                    landmark.x * width / scale for landmark in landmarks.landmark
                 ]
                 y_coords = [
-                    landmark.y * height for landmark in landmarks.landmark
+                    landmark.y * height / scale for landmark in landmarks.landmark
                 ]
 
-                x_min, x_max = int(min(x_coords)), int(max(x_coords))
-                y_min, y_max = int(min(y_coords)), int(max(y_coords))
+                x_min, x_max = int(min(x_coords) / scale), int(max(x_coords) / scale)
+                y_min, y_max = int(min(y_coords) / scale), int(max(y_coords) / scale)
 
                 bboxes_c = np.array([[x_min, y_min], [x_max, y_max]]).astype(np.float32)
 

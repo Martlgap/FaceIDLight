@@ -25,4 +25,8 @@
 
 from FaceIDLight.demo import Demonstrator
 
-Demonstrator(gal_dir="./sample_gal", model_type="FaceTransformerOctupletLoss", detector_type="Mediapipe").run()
+# MobileNetV2
+# FaceTransformerOctupletLoss
+
+
+Demonstrator(gal_dir="./sample_gal", model_type="FaceTransformerOctupletLoss", detector_type="MTCNN").run()
